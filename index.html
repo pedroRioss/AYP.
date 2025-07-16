@@ -1,0 +1,617 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Girasol con Corazones y Hojitas</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background: linear-gradient(to top, #bdf2ff 0%, #fdfcdc 40%, #ffe2e2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    position: relative;
+  }
+
+  .canvas {
+    position: fixed;
+    width: 90vw;
+    height: 80vh;
+    max-width: 400px;
+    max-height: 600px;
+    background: url("https://www.transparenttextures.com/patterns/french-paper.png");
+    background-size: cover;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  .ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15vh;
+    background: radial-gradient(ellipse at center, #a7d28d 0%, #7fc27f 100%);
+    z-index: 1;
+  }
+
+  .cloud {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: cloudMove 60s linear infinite;
+  }
+
+  .cloud::after,
+  .cloud::before {
+    content: '';
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  .cloud1 {
+    width: 25vw;
+    height: 15vw;
+    top: 10%;
+    left: -120px;
+  }
+
+  .cloud1::before {
+    width: 15vw;
+    height: 15vw;
+    top: -5vw;
+    left: 8vw;
+  }
+
+  .cloud1::after {
+    width: 12vw;
+    height: 12vw;
+    top: 2vw;
+    left: 14vw;
+  }
+
+  .cloud2 {
+    width: 30vw;
+    height: 18vw;
+    top: 20%;
+    left: -200px;
+    animation-delay: 30s;
+  }
+
+  .cloud2::before {
+    width: 18vw;
+    height: 18vw;
+    top: -4vw;
+    left: 7vw;
+  }
+
+  .cloud2::after {
+    width: 15vw;
+    height: 15vw;
+    top: 2vw;
+    left: 14vw;
+  }
+
+  @keyframes cloudMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(130vw); }
+  }
+
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: sparkleFloat 5s linear infinite;
+  }
+
+  @keyframes sparkleFloat {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-200px) scale(0.5); opacity: 0; }
+  }
+
+  .butterfly {
+    position: absolute;
+    width: 8vw;
+    height: 8vw;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/89/Butterfly_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: fly 12s ease-in-out infinite;
+    opacity: 0.8;
+    z-index: 2;
+  }
+
+  .butterfly:nth-child(1) { top: 60%; left: 0; animation-delay: 0s; }
+  .butterfly:nth-child(2) { top: 70%; left: -50px; animation-delay: 5s; }
+
+  @keyframes fly {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(200px, -60px) rotate(10deg); }
+    50% { transform: translate(400px, 0px) rotate(-10deg); }
+    75% { transform: translate(600px, -60px) rotate(10deg); }
+    100% { transform: translate(800px, 0px) rotate(0deg); }
+  }
+
+  .heart-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .heart {
+    position: absolute;
+    width: 14vw;
+    height: 14vw;
+    max-width: 60px;
+    max-height: 60px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="%230084ff" stroke="%23004488" stroke-width="1" d="M16 29s-13-7.4-13-17a7 7 0 0 1 13-4 7 7 0 0 1 13 4c0 9.6-13 17-13 17z"/><path fill="white" fill-opacity="0.3" d="M12 7c-2 0-4 2-4 4 0 6 8 11 8 11s8-5 8-11c0-2-2-4-4-4-2 0-3 1-4 2-1-1-2-2-4-2z"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: floatUp linear infinite;
+    z-index: 2;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+  }
+
+  @media (max-width: 480px) {
+    .canvas {
+      width: 95vw;
+      height: 75vh;
+      border-radius: 12px;
+    }
+
+    .heart {
+      width: 30px;
+      height: 30px;
+    }
+
+    .butterfly {
+      width: 18px;
+      height: 18px;
+    }
+
+    .ground {
+      height: 12vh;
+    }
+
+    .cloud1, .cloud2 {
+      width: 40px !important;
+      height: 25px !important;
+    }
+  }
+</style>
+
+
+</head>
+
+<body>
+
+  <!-- Nubes -->
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  <div class="cloud cloud4"></div>
+
+  <!-- Pradera -->
+  <div class="ground"></div>
+
+  <!-- Mariposas -->
+  <div class="butterfly"></div>
+  <div class="butterfly"></div>
+
+<!-- Brillitos mágicos -->
+<script>
+  for (let i = 0; i < 20; i++) {
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.left = `${Math.random() * 100}vw`;
+    sparkle.style.bottom = "0";
+    sparkle.style.animationDuration = `${Math.random() * 4 + 4}s`;
+    sparkle.style.animationDelay = `${Math.random() * 5}s`;
+    document.body.appendChild(sparkle);
+  }
+</script>
+
+    <!-- Fondo adicional: nubes y pradera -->
+<div class="decorative-bg">
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="ground"></div>
+</div>
+
+  <div class="heart-bg">
+    <!-- Más corazones -->
+    <div class="heart" style="left: 5%; animation-duration: 11s; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 10%; animation-duration: 13s; animation-delay: 1s;"></div>
+    <div class="heart" style="left: 15%; animation-duration: 12s; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 20%; animation-duration: 14s; animation-delay: 3s;"></div>
+    <div class="heart" style="left: 25%; animation-duration: 10s; animation-delay: 4s;"></div>
+    <div class="heart" style="left: 30%; animation-duration: 11s; animation-delay: 1.5s;"></div>
+    <div class="heart" style="left: 40%; animation-duration: 13s; animation-delay: 0.5s;"></div>
+    <div class="heart" style="left: 50%; animation-duration: 12s; animation-delay: 2.5s;"></div>
+    <div class="heart" style="left: 60%; animation-duration: 14s; animation-delay: 1.2s;"></div>
+    <div class="heart" style="left: 70%; animation-duration: 10s; animation-delay: 3.5s;"></div>
+    <div class="heart" style="left: 80%; animation-duration: 12s; animation-delay: 4.5s;"></div>
+    <div class="heart" style="left: 90%; animation-duration: 13s; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 95%; animation-duration: 11s; animation-delay: 1.8s;"></div>
+  </div>
+
+  <!-- Girasoles de fondo -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const fondoGirasoles = document.createElement("div");
+    fondoGirasoles.style.position = "absolute";
+    fondoGirasoles.style.bottom = "0";
+    fondoGirasoles.style.left = "0";
+    fondoGirasoles.style.width = "100%";
+    fondoGirasoles.style.height = "100%";
+    fondoGirasoles.style.zIndex = "1";
+    fondoGirasoles.style.pointerEvents = "none";
+    document.body.appendChild(fondoGirasoles);
+
+    const cantidad = 40;
+
+    // Colores del girasol principal
+    const colorPetalo = "#fcd34d";
+    const colorCentro = "#92400e";
+
+    for (let i = 0; i < cantidad; i++) {
+      const girasolFondo = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      girasolFondo.setAttribute("viewBox", "0 0 200 300");
+      girasolFondo.style.position = "absolute";
+
+      // Tamaño ligeramente más grande
+      const scale = Math.random() * 0.4 + 0.9; // entre 0.9 y 1.3
+      const width = 60 * scale;
+      const height = 90 * scale;
+      girasolFondo.style.width = `${width}px`;
+      girasolFondo.style.height = `${height}px`;
+
+      // Posición aleatoria
+      girasolFondo.style.left = `${Math.random() * 100}%`;
+      girasolFondo.style.bottom = `${Math.random() * 60}px`;
+
+      girasolFondo.style.opacity = "0.7";
+
+      girasolFondo.innerHTML = `
+        <g>
+          <rect x="95" y="160" width="10" height="120" rx="5" ry="5" fill="#4caf50" />
+          <path d="M90,220 C70,210 70,240 90,230 Z" fill="#4caf50" />
+          <path d="M110,220 C130,210 130,240 110,230 Z" fill="#4caf50" />
+          <g transform="translate(100,150)">
+            <g>
+              ${[...Array(12)].map((_, j) => {
+                const angle = j * 30;
+                return `<path d="M0,-70 C12,-50 12,-20 0,0 C-12,-20 -12,-50 0,-70" fill="${colorPetalo}" transform="rotate(${angle})" />`;
+              }).join("")}
+              <circle r="25" fill="${colorCentro}" />
+            </g>
+          </g>
+        </g>
+      `;
+      fondoGirasoles.appendChild(girasolFondo);
+    }
+  });
+</script>
+
+
+
+
+  <div class="canvas">
+    <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="center" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#865439" />
+          <stop offset="100%" stop-color="#2d1b0e" />
+        </radialGradient>
+        <filter id="watercolor" x="-50%" y="-50%" width="200%" height="200%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="turb"/>
+          <feDisplacementMap in="SourceGraphic" in2="turb" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.2"/>
+        </filter>
+      </defs>
+
+      <!-- Tallo -->
+      <rect x="95" y="160" width="10" height="120" rx="5" ry="5" fill="#4caf50" filter="url(#watercolor)" />
+
+      <!-- Hojas -->
+      <path d="M90,220 C70,210 70,240 90,230 Z" fill="#4caf50" filter="url(#watercolor)" />
+      <path d="M110,220 C130,210 130,240 110,230 Z" fill="#4caf50" filter="url(#watercolor)" />
+
+      <!-- Girasol -->
+      <g filter="url(#softShadow)">
+        <g transform="translate(100,150)" filter="url(#watercolor)">
+          <g>
+          
+            <!-- Pétalos (más grandes) -->
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fcd34d" transform="rotate(0)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fde68a" transform="rotate(30)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#facc15" transform="rotate(60)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fbbf24" transform="rotate(90)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#f59e0b" transform="rotate(120)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fcd34d" transform="rotate(150)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fde68a" transform="rotate(180)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#facc15" transform="rotate(210)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fbbf24" transform="rotate(240)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#f59e0b" transform="rotate(270)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fcd34d" transform="rotate(300)" />
+<path d="M0,-90 C14,-65 14,-25 0,0 C-14,-25 -14,-65 0,-90" fill="#fde68a" transform="rotate(330)" />
+
+          </g>
+          <!-- Centro -->
+          <circle r="25" fill="url(#center)" />
+        </g>
+      </g>
+    </svg>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const girasolGrupo = document.querySelector('g[transform="translate(100,150)"] > g');
+  const fondo = document.createElement("div");
+  fondo.style.position = "absolute";
+  fondo.style.bottom = "0";
+  fondo.style.left = "0";
+  fondo.style.width = "100%";
+  fondo.style.height = "150px";
+  fondo.style.pointerEvents = "none";
+  fondo.style.zIndex = "2";
+  document.body.appendChild(fondo);
+
+  const frases = [
+    "Mi ternura por ti nunca ha sido tan profunda ni tan total.",
+    "Todo yo tiembla al pensarte.",
+    "Siento crecer en mí la ola de amor que tengo por ti.",
+    "Te amo como se ama en la desesperación.",
+    "Cuando no estás, el mundo se vacía de sentido.",
+    "Tu ausencia me devora con lentitud.",
+    "Soñé con tu voz y fue más dulce que cualquier música.",
+    "Este amor me consume.",
+    "Cada palabra que te nombro me quema.",
+    "No sé vivir sin ti.",
+    "Tus recuerdos me sostienen.",
+    "Eres el mundo que me permite respirar.",
+    "He probado otros labios, pero solo los tuyos recuerdo.",
+    "Nunca me sentí más hombre que en tus brazos.",
+    "Tenerte junto al pecho, como un secreto ardiente.",
+    "Cierro los ojos solo para verte.",
+    "Estás tatuada en cada pensamiento.",
+    "No hay rincón en mí que no te pertenezca.",
+    "Eres mi necesidad más dulce.",
+    "Esta noche te he deseado como nunca.",
+    "Tu nombre me da calor.",
+    "Me dueles con dulzura.",
+    "Cada carta es un intento de abrazarte.",
+    "No me bastan los días para amarte.",
+    "La noche me habla de ti.",
+    "Estás en mí más allá de la carne.",
+    "Perderme en tus cabellos para siempre.",
+    "Te amo sin salida ni tregua.",
+    "Toda mi alma es tuya.",
+    "Volaría cada noche para dormir entre tus brazos.",
+    "No tengo más certeza que el deseo ardiente de tu presencia.",
+    "Me haces falta como el aire, como el sol.",
+    "He pasado el día amándote en silencio.",
+    "Estoy lleno de ti, hasta el borde de mi piel.",
+    "Te llevo en mí como una llama insaciable.",
+    "Nada me calma sino la idea de ti.",
+    "Lo único que deseo es verte y fundirme contigo.",
+    "Toda mi ternura está suspendida en tus labios.",
+    "Me haces tan vulnerable, tan feliz.",
+    "Me doy por completo cuando pienso en ti.",
+    "Tu voz resuena aún en mi cuerpo.",
+    "Tu imagen me persigue dulcemente.",
+    "Me haces temblar incluso desde la distancia.",
+    "En cada espacio vacío, te busco.",
+    "Quisiera vivir entre tus brazos y tus silencios.",
+    "No hay descanso para este amor, ni sombra, ni tregua.",
+    "Te amo con todo lo que soy y todo lo que duele.",
+    "Escribo estas líneas con la necesidad de besarte.",
+    "Tu cuerpo, tu olor, tu risa: todo me hace falta.",
+    "Cada noche sin ti es un desierto.",
+    "Todo mi cuerpo desea encontrarte.",
+    "Eres el origen de mi fiebre.",
+    "Hoy te amo como si el mundo se terminara.",
+    "Tu recuerdo me arde más que el deseo.",
+    "No puedo contener esta necesidad de ti.",
+    "Me aferro a tus palabras como si fueran mi hogar.",
+    "Nunca he deseado tanto un alma como la tuya.",
+    "Te amo en cada centímetro de ausencia.",
+    "Tu piel me llama incluso en el sueño.",
+    "Estoy enfermo de ti, pero es la más dulce enfermedad.",
+    "Cada día sin ti es un error que no puedo evitar.",
+    "Tu sola idea me despierta del mundo.",
+    "He escrito tu nombre en todos los rincones del alma.",
+    "Cuando cierro los ojos, siento tu piel contra la mía.",
+    "Nunca he sido tan frágil como cuando te amo.",
+    "Te amo con un amor que no sabe mentir.",
+    "Ni el tiempo ni la distancia apagan este fuego.",
+    "Quiero devorarte con mis ojos, con mis manos, con mi alma.",
+    "El deseo que me provocas no tiene nombre.",
+    "Te he soñado tantas veces que ya formas parte de mí.",
+    "Mi cuerpo entero te espera.",
+    "No hay noche que no te escriba en mi pensamiento.",
+    "No existe más belleza para mí que la de tu existencia.",
+    "Amo hasta tus silencios.",
+    "Te imagino al leer estas líneas y me tiemblan las manos.",
+    "Te amo más allá de la razón y el sentido.",
+    "Estoy rendido ante ti sin resistencia.",
+    "Este amor mío es una tempestad suave, pero imparable.",
+    "Tus besos son mi verdadera oración.",
+    "Quisiera que mi voz llegara ahora a tu oído, en un susurro.",
+    "Te pienso incluso cuando intento no pensarte.",
+    "Tu risa vive en mi pecho como un latido.",
+    "Cada palabra tuya es una caricia lejana.",
+    "Mi deseo por ti es puro, como la primera sed.",
+    "Estoy habitado por tu presencia.",
+    "Mi amor por ti no conoce calma.",
+    "Eres mi certeza en un mundo incierto.",
+    "La idea de ti me consuela incluso en la tristeza.",
+    "Amarte es mi única religión verdadera.",
+    "Estoy tan lleno de ti que no sé dónde empiezo yo.",
+    "En mi alma solo hay espacio para ti.",
+    "Nunca supe amar hasta que te conocí.",
+    "Eres mi necesidad más honesta.",
+    "Te deseo como se desea la vida misma.",
+    "Tu ausencia es una presencia en mi cuerpo.",
+    "He hecho de ti mi única patria.",
+    "Eres la llama que no quiero apagar.",
+    "Este amor no se escribe, se arde.",
+    "Cada carta que no te escribo también te pertenece."
+  ];
+
+  let frasesDisponibles = [...frases].sort(() => Math.random() - 0.5);
+  function obtenerFrase() {
+    if (frasesDisponibles.length === 0) {
+      frasesDisponibles = [...frases].sort(() => Math.random() - 0.5);
+    }
+    return frasesDisponibles.pop();
+  }
+
+  const petalosOriginales = Array.from(girasolGrupo.querySelectorAll("path")).map(p => ({
+    d: p.getAttribute("d"),
+    fill: p.getAttribute("fill"),
+    transform: p.getAttribute("transform")
+  }));
+
+  let caidos = 0;
+
+  function agregarEventos(petalos) {
+    petalos.forEach((petalo) => {
+      petalo.style.cursor = "pointer";
+
+      petalo.addEventListener("click", () => {
+        if (petalo.dataset.caido === "true") return;
+        petalo.dataset.caido = "true";
+
+        petalo.style.transition = "transform 1s ease-in, opacity 1s";
+        petalo.style.transformOrigin = "center";
+        petalo.style.transform = "translateY(150px) rotate(90deg) scale(0.3)";
+        petalo.style.opacity = "0";
+
+        const petaloHTML = document.createElement("div");
+        petaloHTML.classList.add("petalo-caido");
+        petaloHTML.style.width = "20px";
+        petaloHTML.style.height = "30px";
+        petaloHTML.style.background = petalo.getAttribute("fill");
+        petaloHTML.style.borderRadius = "50% 50% 50% 50% / 60% 60% 40% 40%";
+        petaloHTML.style.position = "absolute";
+        petaloHTML.style.bottom = "0";
+        petaloHTML.style.left = `${Math.random() * 90 + 5}%`;
+        petaloHTML.style.transform = `rotate(${Math.random() * 360}deg)`;
+        petaloHTML.style.opacity = "0";
+        petaloHTML.style.transition = "opacity 1s";
+        fondo.appendChild(petaloHTML);
+        setTimeout(() => petaloHTML.style.opacity = "1", 50);
+
+        const petaloGrande = document.createElement("div");
+        petaloGrande.style.position = "fixed";
+        petaloGrande.style.top = "50%";
+        petaloGrande.style.left = "50%";
+        petaloGrande.style.transform = "translate(-50%, -50%) scale(0.5)";
+        petaloGrande.style.width = "200px";
+        petaloGrande.style.height = "300px";
+        petaloGrande.style.background = petalo.getAttribute("fill");
+        petaloGrande.style.borderRadius = "50% 50% 50% 50% / 60% 60% 40% 40%";
+        petaloGrande.style.display = "flex";
+        petaloGrande.style.justifyContent = "center";
+        petaloGrande.style.alignItems = "center";
+        petaloGrande.style.flexDirection = "column";
+        petaloGrande.style.opacity = "0";
+        petaloGrande.style.zIndex = "999";
+        petaloGrande.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+
+        const mensaje = document.createElement("div");
+        mensaje.textContent = obtenerFrase();
+        mensaje.style.color = "#fff";
+        mensaje.style.fontWeight = "bold";
+        mensaje.style.fontSize = "18px";
+        mensaje.style.textAlign = "center";
+        mensaje.style.padding = "10px";
+        mensaje.style.textShadow = "1px 1px 2px #000";
+
+        petaloGrande.appendChild(mensaje);
+        document.body.appendChild(petaloGrande);
+
+        setTimeout(() => {
+          petaloGrande.style.opacity = "1";
+          petaloGrande.style.transform = "translate(-50%, -50%) scale(1)";
+        }, 50);
+
+        setTimeout(() => {
+          petaloGrande.style.opacity = "0";
+          petaloGrande.style.transform = "translate(-50%, -60%) scale(0.8)";
+        }, 2500);
+
+        setTimeout(() => petaloGrande.remove(), 3500);
+
+        caidos++;
+        if (caidos === petalos.length) {
+          setTimeout(() => {
+            girasolGrupo.querySelectorAll("path").forEach(p => p.remove());
+            caidos = 0;
+            regenerarFlor();
+          }, 1200);
+        }
+      });
+    });
+  }
+
+  function regenerarFlor() {
+    const nuevos = [];
+
+    petalosOriginales.forEach((info, i) => {
+      const nuevo = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      nuevo.setAttribute("d", info.d);
+      nuevo.setAttribute("fill", info.fill);
+      nuevo.setAttribute("transform", info.transform);
+      nuevo.style.opacity = "0";
+      nuevo.style.transition = "opacity 1s";
+      girasolGrupo.appendChild(nuevo);
+      nuevos.push(nuevo);
+
+      setTimeout(() => nuevo.style.opacity = "1", 100 + i * 100);
+    });
+
+    setTimeout(() => agregarEventos(nuevos), 1500);
+  }
+
+  agregarEventos(Array.from(girasolGrupo.querySelectorAll("path")));
+});
+</script>
+
+<audio id="bg-music" autoplay loop>
+<source src="Twister El Rey - El Amor De Mi Vida [Original].mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
+
+</body>
+</html>
